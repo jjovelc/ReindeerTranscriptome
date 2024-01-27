@@ -51,11 +51,10 @@ julienData <br>
 ##### Quality trimming
 
 
-<pre>
+
 ```bash
 INFILE="concatenated_fastq_files.fastq"
 fastq-mcf ~/useful_files/adapters.fa -o ${INFILE}_q"${Q}.fq "$INFILE" -k 0 -l 50  -w 3 -q Q
-
 ```
 
 
