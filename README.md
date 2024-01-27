@@ -50,7 +50,7 @@ julienData
 
 Here a summary of assembly results:
 
-![Assembly results](summary_assemblies.png "Assembly results")
+![Assembly results](summaryAssemblies.png "Assembly results")
 
 
 
