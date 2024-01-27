@@ -44,13 +44,26 @@ Developers: Team of Inanc Birol (BC Cancer Research Institute)
 
 Assemblies were conducted separately, for each data set, and are stored in the following subdirectories:
 
-jeffData
-juhaData
-julienData
+jeffData <br>
+juhaData <br>
+julienData <br>
+
+##### Quality trimming
+
+
+<pre>
+```bash
+INFILE="concatenated_fastq_files.fastq"
+fastq-mcf ~/useful_files/adapters.fa -o ${INFILE}_q"${Q}.fq "$INFILE" -k 0 -l 50  -w 3 -q Q
+
+```
+
+
 
 Here a summary of assembly results:
 
 ![Assembly results](summaryAssemblies.png "Assembly results")
+
 
 
 
