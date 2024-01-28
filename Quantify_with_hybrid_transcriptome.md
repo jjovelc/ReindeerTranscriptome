@@ -39,3 +39,39 @@ For that, simply run the following command:
     perl create_t2g.pl bt-rt_transcriptome.fa > t2g.txt
 ```
 
+## Quantify libraries with salmon alevin
+
+To quantify a series of libraries with barcodes-UMIs in end1 and reads in end2, you can run the following command:
+
+```bash
+    sbatch quantify_with_salmon.slurm
+```
+
+Results from `salmon alevin` will be stored in directory `alevin_output`. Now move this directory to your local computer.
+
+To inspect QC metricts on your alevin results, you can use, in your local computer, the script alevinQC.R. Run it in R studio, since running from the prompt may result in error when generating the HTML report. You only have to modify the working directory to include the absolute path up to your alevin_output directory. You then can modify the value of the argument `sampleId` to any string you want to use to identify this run. 
+
+Finally, to import data into R, for example with use with Seurat, do something like this:
+
+```R
+library(Seurat)
+library(Matrix)
+library(data.table)
+library(DropletUtils)
+
+setwd('/your/working/directory/alevin_output/')
+
+# Path to the Alevin output directory
+alevin_dir <- "alevin"
+
+# File paths
+files <- file.path(alevin_dir, "quants_mat.gz")
+names(files) <- "yourSampleName"
+
+# Import with tximport
+txi <- tximport(files, type = "alevin")
+data <- txi$counts
+
+# Create the Seurat object
+pbmc <- CreateSeuratObject(counts = data, project = "YourProjectName")
+```
