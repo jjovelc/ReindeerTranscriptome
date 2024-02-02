@@ -272,10 +272,18 @@ And results were extracted into a tabular report:
     Trinotate --db  reindeer_transc.db --report > reindeer_transc_Trinotate_report.tsv
 ```
 
+Reads for which Trinotate found annotations can be extracted with the following command line:
+
+```bash
+    cut -f 1 Trinity.fasta.transdecoder_complete.cds | sed 's/>//' | grep - reindeer_transc_Trinotate_report.tsv | cut -f 1,3 | awk '$2 != "."' > Trinity.fasta.transdecoder_complete_trinotate_annotations.txt
+```
+
+Out of 80,034 reads subjected to annotation in file `Trinity.fasta.transdecoder_complete.cds`, 43,694 got annotations and those annotations were saved in file `Trinity.fasta.transdecoder_complete_annotations.txt`.  
+
 Unique protein IDs were extracted from the Trinotate report with the following command:
 
 ```bash
-cut -f 3 reindeer_transc_Trinotate_report.tsv | cut -d '^' -f 1 | sed '/^\.$/d' | sort | uniq > unique_reindeer_protein_ids_list.txt
+cut -f 3 Trinity.fasta.transdecoder_complete_annotations.txt | cut -d '^' -f 1 | sed '/^\.$/d' | sort | uniq > unique_reindeer_protein_ids_list.txt
 ```
 
 Annotation for such proteins were retrieved from the Uniprot database:
@@ -284,11 +292,30 @@ Annotation for such proteins were retrieved from the Uniprot database:
 python retrieve_protein_annotations_uniprot.py unique_reindeer_protein_ids_list.txt > reindeer_assembly_annotations_uniprot.tsv 
 ```
 
-In parallel, reads in file `Trinity.fasta.transdecoder_complete.cds` were aligned against the cow transcriptome `Bos_taurus.ARS-UCD1.2.cdna.all.fa` with the software Hisat2 and those reads that did not align (21930) were extracted and stored in file `Trinity.fasta.transdecoder_complete_unaligned.fasta`
+The following files were used for annotation the ID of files:
 
-In parallel, reads in `Trinity.fasta.transdecoder_complete.cds` 
+reindeer_assembly_annotations_uniprot.tsv
+Trinity.fasta.transdecoder_complete_annotations.txt
+node_and_prot_ids.txt
+Trinity.fasta.transdecoder_complete.cds
+Trinity.fasta.transdecoder_complete.pep
 
-... IN CONSTRUCTION ... 
+using script `annotate_fasta_id.pl`. The results were stored in the following files:
+
+trinotate_report_table.tsv
+trinotate_report_table.xlsx 
+(a table with annotations for each transcript that could be annotated)
+
+Trinity.fasta.transdecoder_complete_with_annotation.fasta
+(All nuleotide reads that could be annotated)
+
+Trinity.fasta.transdecoder_complete_with_annotation.faa
+(All protein reads that could be annotated)
+
+Annotated sequences were aligned agains the `Bos_taurus.ARS-UCD1.2.cdna.all.fa` transcriptome and transcripts that did not aligned that reference were labelled as novel transcripts. Those are stored in file: `Trinity.fasta.transdecoder_complete_with_annotation_novel.fasta`.
+
+However, it is important to notice that even when those transcripts aligned to the cow transcriptome with some similarity and significant e-value it does noe mean that the could not align with higher similarity to the reindeer actual transcriptome.
+ 
 
 
 
