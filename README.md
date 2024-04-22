@@ -222,7 +222,7 @@ More generally, if any subset of a FASTA file needed to be extracted, the subset
 
 Such putative transcripts were subjected to annotation with the Trinotate pipeline (https://github.com/Trinotate/Trinotate/wiki). 
 
-Initially, an sqlite database is crated and populated with databases for comparison of nucleotide and protein sequences. 
+Initially, an sqlite database is created and populated with databases for comparison of nucleotide and protein sequences. 
 
 ```bash
 Trinotate --db reindeer_transc.db --create --trinotate_data_dir trinotate_db
