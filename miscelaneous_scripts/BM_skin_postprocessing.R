@@ -7,6 +7,7 @@ library(ggplot2)
 library(patchwork)
 library(reticulate)
 
+# Change the following line to include your own directory
 setwd('/Users/juanjovel/jj/data_analysis/jeffBiernaskie/RangiferTarandus/transcriptomeAssembly/compare_jeff_against_combined/evaluation_hybrid_transcriptome/hybrid_transcriptome/alevin_results/')
 main_dir <- getwd()
 
